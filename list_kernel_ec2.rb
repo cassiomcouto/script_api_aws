@@ -13,28 +13,23 @@ cont_notaccess=0
 ec2.instances.each do |instance|
  if verify_itype.include? instance.instance_type.split(".").first
   begin
-   puts "------------"
-
    instance.tags.each do |tag|
     if tag.key == "Name"
      @name = tag.value
       end
    end
-   
-   puts "Name: #{@name}"
-   puts "Type: #{instance.instance_type}"
    cont_instance = cont_instance + 1
-   
+   print = "#{@name} | #{instance.instance_type} | #{instance.private_ip_address}"
+
    #Acessa a maquina por ssh
    Net::SSH.start("#{instance.private_ip_address}", "#{@username}") do |ssh|
      @kernel = ssh.exec!("uname -r")
    end
-  
-   puts "Kernel: #{@kernel}"
+   puts "#{print} | #{@kernel}"
 
   #Caso não consiga acessa a maquina retorna o erro  
   rescue Exception => e
-   puts "Erro:"+e.message
+   puts "#{print} | #{e.message}" 
    cont_notaccess = cont_notaccess + 1
       next
   end 

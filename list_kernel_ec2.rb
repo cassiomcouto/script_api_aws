@@ -1,8 +1,6 @@
 require 'aws-sdk'
 require 'net/ssh'
 
-#Declarar usuario ssh
-@username = "cassiocouto"
 
 verify_itype=['c5', 'c5d', 'i3', 'm5', 'm5d', 'r5', 'r5d', 't3']
 
@@ -22,7 +20,7 @@ ec2.instances.each do |instance|
    print = "#{@name} | #{instance.instance_type} | #{instance.private_ip_address}"
 
    #Acessa a maquina por ssh
-   Net::SSH.start("#{instance.private_ip_address}", "#{@username}") do |ssh|
+   Net::SSH.start("#{instance.private_ip_address}") do |ssh|
      @kernel = ssh.exec!("uname -r")
    end
    puts "#{print} | #{@kernel}"

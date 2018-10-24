@@ -12,7 +12,7 @@ def list_keys(iam, user_name)
     end
   
   rescue Aws::IAM::Errors::NoSuchEntity
-    puts "Cannot find user '#{user_name}'."
+    puts "Cannot Find user '#{user_name}'."
     exit(false)
   end 
 end
@@ -22,6 +22,6 @@ iam.list_users.users.each do |u|
   if @key != nil  
     puts "#{u.user_name} |  #{@key}"
   else
-     puts "#{u.user_name} |  Não possui Accees Key"
+     puts "#{u.user_name} |  Not Found Access Key"
   end
 end
